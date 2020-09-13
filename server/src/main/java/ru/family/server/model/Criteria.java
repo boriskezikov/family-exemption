@@ -6,6 +6,7 @@ import java.sql.SQLException;
 public record Criteria(
     Long id,
     String name,
+    Type type,
     String description
 ) {
 
@@ -18,8 +19,13 @@ public record Criteria(
             return new Criteria(
                 resultSet.getLong("id"),
                 resultSet.getString("name"),
+                Type.valueOf(resultSet.getString("type")),
                 resultSet.getString("description")
             );
         }
+    }
+
+    public enum Type {
+        STRING, INT, BOOLEAN
     }
 }

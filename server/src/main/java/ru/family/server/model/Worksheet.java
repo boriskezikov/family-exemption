@@ -2,11 +2,12 @@ package ru.family.server.model;
 
 import java.util.List;
 
+@Deprecated
 public record Worksheet(
     Integer age,
-    GENDER gender,
-    FAMILY family,
-    SOCIAL_STATUS socialStatus,
+    Gender gender,
+    Family family,
+    SocialStatus socialStatus,
     Boolean married,
     Integer children,
     List<Integer> childrenAges,
@@ -15,11 +16,11 @@ public record Worksheet(
     String address
 ) {
 
-    public enum GENDER {
+    public enum Gender {
         MALE, FEMALE
     }
 
-    public enum SOCIAL_STATUS {
+    public enum SocialStatus {
         PUPIL,
         UNDERGRADUATE,
         STUDENT,
@@ -28,7 +29,7 @@ public record Worksheet(
         RETIRED
     }
 
-    public enum FAMILY {
+    public enum Family {
         FULL, ONE_PARENT, NONE
     }
 }
