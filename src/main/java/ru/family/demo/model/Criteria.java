@@ -26,6 +26,6 @@ public record Criteria(
     }
 
     public enum Type {
-        STRING, INT, BOOLEAN
+        STRING, INT, BOOLEAN, DATE
     }
 }

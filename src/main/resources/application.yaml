@@ -4,6 +4,13 @@ spring:
     password: abd5dc7cdf93ac7f2f773df6d6722cc562ccacb984f47aa0eec7ae5dfcc0eb06
     url: jdbc:postgresql://ec2-54-228-209-117.eu-west-1.compute.amazonaws.com:5432/dbqkkivmg6a58g
     driver-class-name: org.postgresql.Driver
+    tomcat:
+      initial-size: 2
+      max-wait: 100
+      max-active: 20
+      max-idle: 1
+      min-idle: 1
+      default-auto-commit: true
 
 server:
   port: 8088

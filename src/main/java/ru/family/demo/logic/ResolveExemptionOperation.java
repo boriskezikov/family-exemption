@@ -14,12 +14,14 @@ import ru.family.demo.model.Exemption;
 import ru.family.demo.model.UserExemption;
 import ru.family.demo.service.ExemptionDao;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toSet;
 
 @Slf4j
 @Component
@@ -48,6 +50,12 @@ public class ResolveExemptionOperation {
             .collect(toMap(Entry::getKey, Entry::getValue));
         var filteredInput = worksheet.entrySet().stream()
             .filter(c -> criteria.containsKey(c.getKey()))
+            .map(e -> {
+                if (e.getValue() instanceof String s && s.matches("[/d]{4}-[/d]{2}-[/d]{2}")) {
+                    return Map.entry(e.getKey(), LocalDate.parse(s));
+                }
+                return e;
+            })
             .collect(toMap(Entry::getKey, Entry::getValue));
         var exemptions = exemptionDao.findExemption(filteredInput, criteria);
 
@@ -57,8 +65,8 @@ public class ResolveExemptionOperation {
                 request.userId(),
                 exemptions.stream()
                     .map(Exemption::id)
-                    .collect(toList()),
-                worksheetJson
+                    .collect(toSet()),
+                Set.of(worksheetJson)
             );
             exemptionDao.saveUserExemption(userExemption);
         }

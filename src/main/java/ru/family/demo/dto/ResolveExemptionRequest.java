@@ -8,6 +8,6 @@ public record ResolveExemptionRequest(
 ) {
 
     public boolean isDefaultUser() {
-        return userId == 1L;
+        return userId == -1L;
     }
 }
