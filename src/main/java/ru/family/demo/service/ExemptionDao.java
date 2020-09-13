@@ -58,7 +58,6 @@ public class ExemptionDao {
 
     public List<Criteria> findCriteria(Collection<String> names) {
         var args = names.stream()
-            .map(String::toUpperCase)
             .map(s -> "'".concat(s).concat("'"))
             .collect(joining(", ", "(", ")"));
         return doRequest(() -> jdbcTemplate.query(

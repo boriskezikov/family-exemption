@@ -13,7 +13,7 @@ create table exemption
     name               varchar  not null,
     description        varchar,
     reference_document bigint[] not null,
-    periodicity        varchar default ('Раз в месяц'),
+    periodicity        varchar   default ('Раз в месяц'),
     start_period       timestamp with time zone,
     end_period         timestamp with time zone,
     created            timestamp default now()
@@ -59,6 +59,16 @@ create table user_exemption
 );
 
 
+create function cyrillic_transliterate(p_string text)
+    returns character varying as
+$BODY$
+SELECT replace(replace(replace(replace(replace(replace(replace(replace(replace(translate(lower($1), 'абвгдеёзийклмнопрстуфхцэы',
+                                                                                         'abvgdeezijklmnoprstufхcey'),
+                                                                               'ж', 'zh'), 'ч', 'ch'),
+                                                               'ш', 'sh'), 'щ', 'shh'), 'ъ', ''), 'ю', 'yu'), 'я', 'ya'), 'ь', ''), ' ', '');
+$BODY$
+    language SQL immutable
+                 cost 100;
 
 create function create_criteria(in_criteria_type criteria_type, in_criteria_name varchar) returns bigint
     language plpgsql
@@ -68,16 +78,16 @@ declare
     p_criteria_id bigint;
     p_table_name  varchar;
 begin
-    p_table_name := format('exemption_criteria_%s_%s', in_criteria_type, in_criteria_name);
+    p_table_name := format('exemption_criteria_%s_%s', in_criteria_type, public.cyrillic_transliterate(in_criteria_name));
 
-    select id from public.criteria where name = upper(in_criteria_name) and type = in_criteria_type into p_criteria_id;
+    select id from public.criteria where name = in_criteria_name and type = in_criteria_type into p_criteria_id;
 
     if p_criteria_id is not null then
         raise exception 'Criteria %  with type % already exists', in_criteria_name, in_criteria_type;
     end if;
 
     insert into public.criteria(type, name)
-    values (in_criteria_type, upper(in_criteria_name))
+    values (in_criteria_type, in_criteria_name)
     returning id into p_criteria_id;
 
     execute format('CREATE TABLE public.%s PARTITION OF public.exemption_criteria FOR VALUES IN (%s);', p_table_name, p_criteria_id);
