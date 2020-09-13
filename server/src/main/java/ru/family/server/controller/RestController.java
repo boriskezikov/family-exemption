@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.family.server.logic.ResolveExemptionOperation;
 import ru.family.server.model.Exemption;
-import ru.family.server.model.Worksheet;
 
 import java.util.List;
+import java.util.Map;
 
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/exemption")
@@ -18,7 +18,7 @@ public class RestController {
     private final ResolveExemptionOperation resolveExemptionOperation;
 
     @PostMapping("/")
-    public List<Exemption> resolveExemption(@RequestBody Worksheet worksheet) {
+    public List<Exemption> resolveExemption(@RequestBody Map<String, Object> worksheet) {
         return resolveExemptionOperation.process(worksheet);
     }
 }
