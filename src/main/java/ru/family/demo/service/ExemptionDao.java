@@ -106,7 +106,8 @@ public class ExemptionDao {
     public void saveUserExemption(UserExemption userExemption) {
         doRequest(() -> jdbcTemplate.update(
             "INSERT INTO public.user_exemption (user_id, exemption_ids, worksheet) "
-                + "VALUES (:userId, :exemptionIds::bigint[], :worksheet)", userExemption.asArgs())
+                + "VALUES (:userId, :exemptionIds::bigint[], :worksheet) "
+                + "ON CONFLICT ON CONSTRAINT unique_user_data DO NOTHING", userExemption.asArgs())
         );
     }
 
