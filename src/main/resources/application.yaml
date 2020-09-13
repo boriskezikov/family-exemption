@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    username: effswxyqajhgkw
+    password: ed574b2585c07b6880060d97ec3520ea4dff1ce279f1f87bd6528638a0acd7b3
+    url: jdbc:postgresql://ec2-3-215-207-12.compute-1.amazonaws.com:5432/d5rlrn4iglfc6p
+    driver-class-name: org.postgresql.Driver
+server:
+  port: 8088
