@@ -44,10 +44,10 @@ public class ResolveExemptionOperation {
     public List<Exemption> internalProcess(ResolveExemptionRequest request) {
         var worksheet = request.worksheet();
         var criteria = exemptionDao.findCriteria(worksheet.keySet()).stream()
-            .map(c -> Map.entry(c.name().toLowerCase(), c))
+            .map(c -> Map.entry(c.name(), c))
             .collect(toMap(Entry::getKey, Entry::getValue));
         var filteredInput = worksheet.entrySet().stream()
-            .filter(c -> criteria.containsKey(c.getKey().toLowerCase()))
+            .filter(c -> criteria.containsKey(c.getKey()))
             .collect(toMap(Entry::getKey, Entry::getValue));
         var exemptions = exemptionDao.findExemption(filteredInput, criteria);
 

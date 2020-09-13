@@ -19,7 +19,7 @@ public record Criteria(
             return new Criteria(
                 resultSet.getLong("id"),
                 resultSet.getString("name"),
-                Type.valueOf(resultSet.getString("type")),
+                Type.valueOf(resultSet.getString("type").toUpperCase()),
                 resultSet.getString("description")
             );
         }

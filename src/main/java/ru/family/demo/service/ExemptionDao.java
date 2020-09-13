@@ -34,20 +34,22 @@ public class ExemptionDao {
         var join = new StringJoiner(" LEFT JOIN ")
             .add("SELECT e.* FROM exemption AS e ");
         var args = new HashMap<String, Object>();
+        var counter = 1;
 
         for (var s : search.entrySet()) {
-            var name = s.getKey().toLowerCase();
+            var alias = "criteria" + counter;
+            var tableName = "table" + counter++;
             join.add(format("exemption_criteria AS %s ON e.id = %s.exemption_id and %s.criteria_id = :%s",
-                            name, name, name, name.concat("_id")));
-            args.put(name, s.getValue());
+                            tableName, tableName, tableName, tableName.concat("_id")));
+            args.put(tableName.concat("_id"), criteria.get(s.getKey()).id());
             if (s.getValue() instanceof Boolean) {
-                and.add(format("%s.boolean_value = :%s", name, name));
+                and.add(format("%s.boolean_value = :%s", tableName, alias));
             } else if (s.getValue() instanceof Integer) {
-                and.add(format("%s.int_value = :%s", name, name));
+                and.add(format("%s.int_value = :%s", tableName, alias));
             } else if (s.getValue() instanceof String) {
-                and.add(format("%s.string_value = :%s", name, name));
+                and.add(format("%s.string_value = :%s", tableName, alias));
             }
-            args.put(name.concat("_id"), criteria.get(name).id());
+            args.put(alias, s.getValue());
         }
         var sql = join.toString()
             .concat(" WHERE ")
@@ -61,7 +63,7 @@ public class ExemptionDao {
             .map(s -> "'".concat(s).concat("'"))
             .collect(joining(", ", "(", ")"));
         return doRequest(() -> jdbcTemplate.query(
-            format("SELECT * FROM public.criteria WHERE upper(name) IN %s", args), Map.of(),
+            format("SELECT * FROM public.criteria WHERE name IN %s", args), Map.of(),
             Criteria.ROW_MAPPER));
     }
 
