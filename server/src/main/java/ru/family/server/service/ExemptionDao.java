@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 import ru.family.server.model.Criteria;
 import ru.family.server.model.Exemption;
+import ru.family.server.model.UserExemption;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -63,6 +64,14 @@ public class ExemptionDao {
         return doRequest(() -> jdbcTemplate.query(
             format("SELECT * FROM public.criteria WHERE upper(name) IN %s", args), Map.of(),
             Criteria.ROW_MAPPER));
+    }
+
+    public void saveUserExemption(UserExemption userExemption) {
+        //fixme add exemption ids field
+        doRequest(() -> jdbcTemplate.update(
+            "INSERT INTO public.user_exemption (user_id, worksheet) "
+                + "VALUES (:userId, :worksheet)", userExemption.asArgs())
+        );
     }
 
     private <R> R doRequest(Supplier<R> getDataCallback) {
