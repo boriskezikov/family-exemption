@@ -1,4 +1,4 @@
-package ru.family.server.configuration;
+package ru.family.demo.configuration;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

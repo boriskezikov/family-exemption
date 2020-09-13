@@ -1,4 +1,4 @@
-package ru.family.server.dto;
+package ru.family.demo.dto;
 
 import java.util.Map;
 

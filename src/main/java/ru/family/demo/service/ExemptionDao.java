@@ -1,4 +1,4 @@
-package ru.family.server.service;
+package ru.family.demo.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpServerErrorException.InternalServerError;
-import ru.family.server.model.Criteria;
-import ru.family.server.model.Exemption;
-import ru.family.server.model.UserExemption;
+import ru.family.demo.model.Criteria;
+import ru.family.demo.model.Exemption;
+import ru.family.demo.model.UserExemption;
 
 import java.util.Collection;
 import java.util.HashMap;

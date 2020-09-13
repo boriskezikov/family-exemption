@@ -1,4 +1,4 @@
-package ru.family.server.logic;
+package ru.family.demo.logic;
 
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 import org.springframework.web.client.HttpStatusCodeException;
-import ru.family.server.dto.ResolveExemptionRequest;
-import ru.family.server.model.Exemption;
-import ru.family.server.model.UserExemption;
-import ru.family.server.service.ExemptionDao;
+import ru.family.demo.dto.ResolveExemptionRequest;
+import ru.family.demo.model.Exemption;
+import ru.family.demo.model.UserExemption;
+import ru.family.demo.service.ExemptionDao;
 
 import java.util.List;
 import java.util.Map;

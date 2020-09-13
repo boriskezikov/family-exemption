@@ -1,4 +1,4 @@
-package ru.family.server;
+package ru.family.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

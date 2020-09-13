@@ -1,4 +1,4 @@
-package ru.family.server.model;
+package ru.family.demo.model;
 
 import java.util.List;
 
